@@ -28,7 +28,6 @@ struct LandmarkTripView: View {
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
-            // MARK: - [CODE-ALONG] Chapter 2.4: Update the Text view with `ItineraryView`
             else if let itinerary = itineraryGenerator?.itinerary {
                 ItineraryView(landmark: landmark, itinerary: itinerary)
                     .padding()
@@ -42,9 +41,9 @@ struct LandmarkTripView: View {
             }
         }
         .task {
-            // MARK: - [CODE-ALONG] Chapter 6.1.2: Pre-warm the model when the view appears
             let generator = ItineraryGenerator(landmark: landmark)
             self.itineraryGenerator = generator
+            generator.prewarmModel()
         }
         .headerStyle(landmark: landmark)
     }

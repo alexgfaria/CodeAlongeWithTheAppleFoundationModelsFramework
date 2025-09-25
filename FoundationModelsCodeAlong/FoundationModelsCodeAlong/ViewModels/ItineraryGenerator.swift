@@ -33,7 +33,6 @@ final class ItineraryGenerator {
     }
     
     func generateItinerary(dayCount: Int = 3) async {
-        // MARK: - [CODE-ALONG] Chapter 6.2.1: Update to exclude schema from prompt
         do {
             let prompt = Prompt {
                 "Generate a \(dayCount)-day itinerary to \(landmark.name)."
@@ -43,6 +42,7 @@ final class ItineraryGenerator {
             }
             let stream = session.streamResponse(to: prompt,
                                                 generating: Itinerary.self,
+                                                includeSchemaInPrompt: false,
                                                 options: GenerationOptions(sampling: .greedy))
             for try await partialResponse in stream {
                 self.itinerary = partialResponse.content
@@ -54,6 +54,8 @@ final class ItineraryGenerator {
     }
     
     func prewarmModel() {
-        // MARK: - [CODE-ALONG] Chapter 6.1.1: Add a function to pre-warm the model
+        session.prewarm(promptPrefix: Prompt {
+            "Generate a 3-day itinerary to \(landmark.name)."
+        })
     }
 }
