@@ -29,8 +29,8 @@ struct LandmarkTripView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             // MARK: - [CODE-ALONG] Chapter 2.4: Update the Text view with `ItineraryView`
-            else if let content = itineraryGenerator?.itineraryContent {
-                Text(LocalizedStringKey(content))
+            else if let itinerary = itineraryGenerator?.itinerary {
+                ItineraryView(landmark: landmark, itinerary: itinerary)
                     .padding()
             }
         }
