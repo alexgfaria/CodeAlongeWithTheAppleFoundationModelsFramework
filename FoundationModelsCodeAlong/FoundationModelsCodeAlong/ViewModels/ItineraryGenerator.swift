@@ -31,12 +31,16 @@ final class ItineraryGenerator {
     }
 
     func generateItinerary(dayCount: Int = 3) async {
-        // MARK: - [CODE-ALONG] Chapter 3.3: Update to use one-shot prompting
         // MARK: - [CODE-ALONG] Chapter 4.1.2: Update to use streaming API
         // MARK: - [CODE-ALONG] Chapter 5.3.3: Update `session.streamResponse` to include greedy sampling
         // MARK: - [CODE-ALONG] Chapter 6.2.1: Update to exclude schema from prompt
         do {
-            let prompt = "Generate a \(dayCount)-day itinerary to \(landmark.name)."
+            let prompt = Prompt {
+                            "Generate a \(dayCount)-day itinerary to \(landmark.name)."
+                            "Give it a fun title and description."
+                            "Here is an example of the desired format, but don't copy its content:"
+                            Itinerary.exampleTripToJapan
+                        }
             let response = try await session.respond(to: prompt, generating: Itinerary.self)
             self.itinerary = response.content
         } catch {
